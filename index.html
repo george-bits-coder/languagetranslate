@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <style>
+ #all_results{
+ 	 
+   display:grid;
+   grid-template-columns:auto auto auto auto;
+   grid-template-rows:auto;
+   gap:auto;
+ }  
+  img{
+  	
+    cursor:pointer;
+    
+  }
+   img:hover{
+   	
+     transform:scale(1.2);
+   }
+   body{
+   	text-align:center;
+    
+   }
+ #bigbox{
+ 	
+   display:flex;
+   
+ }
+
+  </style>
+  </head>
+  
+  
+  
+<body>
+  
+  <h2>Translate </h2>
+  <div id="bigbox">
+  <div>
+    <label> Translate from?</label>
+    <select id="language">
+      <option value="auto"> Auto Detect Language</option>
+       <option value="en"> English</option>
+      <option value="ar"> Arabic</option>
+       <option value="zh"> Chineese</option>
+       <option value="fr">French</option>
+       <option value="de"> German</option>
+      <option value="hi"> Hindi</option>
+       <option value="id"> Indonesian</option>
+       <option value="ga">Irish</option>
+       <option value="it"> Italian</option>
+      <option value="ja"> Japanese</option>
+       <option value="ko"> Korean</option>
+      <option value="pl"> Polish</option>
+       <option value="pt">Portugese</option>
+       <option value="ru"> Russina</option>
+      <option value="es"> Spanish</option>
+       <option value="tr"> Turkish</option>
+       <option value="vi">Vietnamese</option>
+       
+    </select>
+  <textarea id="txt" rows="4" cols="50"></textarea>
+<br>
+    <button onclick="tr()">Translate</button>
+    </div>
+    <div>
+      <label> Translate into?</label>
+           <select id="towhat">
+    
+     <option value="en"> English</option>
+      <option value="ar"> Arabic</option>
+       <option value="zh"> Chineese</option>
+       <option value="fr">French</option>
+       <option value="de"> German</option>
+      <option value="hi"> Hindi</option>
+       <option value="id"> Indonesian</option>
+       <option value="ga">Irish</option>
+       <option value="it"> Italian</option>
+      <option value="ja"> Japanese</option>
+       <option value="ko"> Korean</option>
+      <option value="pl"> Polish</option>
+       <option value="pt">Portugese</option>
+       <option value="ru"> Russina</option>
+      <option value="es"> Spanish</option>
+       <option value="tr"> Turkish</option>
+       <option value="vi">Vietnamese</option>
+       
+       
+    </select>
+   <textarea id="tothis" rows="4" cols="50"></textarea>
+    </div>
+  </div>
+  <div id="all_results"></div>
+  
+  </body>
+  
+  
+  
+</html>
+
+<script>
+  
+
+  var ar=document.getElementById("all_results");
+  function tr(){
+      var lan=document.getElementById("language");
+  var glanguage=lan.value;
+   var lang=document.getElementById("towhat");
+  var tlanguage=lang.value;
+  var txtt=document.getElementById("txt");
+     var ans=document.getElementById("tothis");
+  var content=txtt.value;
+  fetch("https://libretranslate.de/translate", {
+	method: "POST",
+	body: JSON.stringify({
+		q: content,
+		source: glanguage,
+		target: tlanguage
+	}),
+	headers: { "Content-Type": "application/json" }
+}).then(function(res){
+    
+    return res.json();}).then(function(res){
+    
+  
+    ans.textContent=res.translatedText;
+    console.log(res.translatedText);
+    
+  }).catch(function(err){
+    console.log(err);
+  });
+
+
+  }
+  
+</script>
